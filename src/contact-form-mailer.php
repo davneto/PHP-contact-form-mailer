@@ -26,7 +26,7 @@
         }
     }
 
-    //VALIDATION: In case of contact form, every field is optional, except not providing neither a message nor an email address. If this is the case, reject request at this point
+    //VALIDATION: For a contact form, consider every input field to be optional, except for not providing neither a message nor an email address as the message would have no relevance whatsoever. If this is the case, reject request at this point and terminate script.
     if(!isset($_POST["email_address"]) && !isset($_POST["message_body"])){
         http_response_code(400);   //Bad request
         exit('Please provide all the required fields.');

@@ -1,6 +1,6 @@
 <?php
 
-	//Customizable fields
+    //Customizable fields
     $custom_mail_subject = "You have recieved a new message on your site!";
     
     function custom_generate_html_mail_body($name, $email, $message_body){

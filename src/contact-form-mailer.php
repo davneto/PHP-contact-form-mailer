@@ -1,20 +1,20 @@
 <?php
-
-    require_once "Mail.php";  //Pear Mail library
-    require_once "../lib/ValidatorSanitizer.php";  //Validator/Sanitizer for some of the imports
-
-    //location of json file with credentials to access gmail SMTP server. Also containing "to" and "from" directions
-    $credentials_location = "../gmail_credentials_and_directions.json";
-    $gmail_credentials_and_directions = json_decode(file_get_contents($credentials_location));
-
+    
     // SET necessary CORS:
     // header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: POST, OPTIONS");
     header("Access-Control-Allow-Headers", "X-Requested-With, content-type");
 
+    require_once "Mail.php";  //Pear Mail library
+    require_once "../lib/ValidatorSanitizer.php";  //Validator/Sanitizer for some of the imports
+
+    //location of json file with credentials to access gmail SMTP server. Also containing "to" and "from" directions
+    $credentials_location = "../config/gmail_credentials_and_directions.json";
+    $gmail_credentials_and_directions = json_decode(file_get_contents($credentials_location));
+
     //set customizable fields from a customized file if provided, else set from the default file.
-    include "../default_data.php";  //default file
-    include "../custom_data.php";   //optional file which overlaps custom data
+    include "./default_fields.php";  //default file
+    include "../config/custom_fields.php";   //optional file which overlaps custom data
 
     $mail_subject = isset($custom_mail_subject) ? $custom_mail_subject : $default_mail_subject; //customizable field source
 

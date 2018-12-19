@@ -19,10 +19,10 @@
     $mail_subject = isset($custom_mail_subject) ? $custom_mail_subject : $default_mail_subject; //customizable field source
 
     function generate_html_mail_body($name, $email, $message_body){  //customizable generator source
-        if(function_exists('custom_generate_html_mail_body')){
-            return custom_generate_html_message_body($name, $email, $message_body);
+        if(function_exists('custom_message')){
+            return custom_generate_html_mail_body($name, $email, $message_body);
         }else{
-            return default_generate_html_message_body($name, $email, $messsage_body);
+            return default_generate_html_mail_body($name, $email, $message_body);
         }
     }
 

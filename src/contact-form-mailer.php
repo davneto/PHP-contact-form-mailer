@@ -26,12 +26,6 @@
         }
     }
 
-    //VALIDATION: For a contact form, consider every input field to be optional, except for not providing neither a message nor an email address as the message would have no relevance whatsoever. If this is the case, reject request at this point and terminate script.
-    if(!isset($_POST["email_address"]) && !isset($_POST["message_body"])){
-        http_response_code(400);   //Bad request
-        exit('Please provide all the required fields.');
-    }   
-
     //SANITIZING: initialize remaining undefined _POST superglobal arguments as empty strings 
     if(!isset($_POST["name"])){ $_POST["name"] = ""; }
     if(!isset($_POST["email_address"])){ $_POST["email_address"] = ""; }
@@ -44,14 +38,16 @@
     // $subject = ValidatorSanitizer::sanitize_text($_POST['subject']);
     $message_body = ValidatorSanitizer::sanitize_text($_POST['message_body']);
 
-    
-    //VALIDATION: further validation
-    $is_data_valid = 
-        ValidatorSanitizer::isValid_email_address($email);
-    if(!$is_data_valid){
-        http_response_code(400);   //Bad request, message successfully sent
-        echo('Couldn\'t send message. Please provide all necessary and adequate inputs.');
-        exit();
+    //VALIDATION: For a contact form, consider every input field to be optional, except for not providing neither a message nor an email address as the message would have no relevance whatsoever. If this is the case, reject request at this point and terminate script.
+    if($email === '' && $message_body === ''){
+        http_response_code(400);   //Bad request
+        exit('Please provide at least an email address or a message.');
+    }
+
+    //VALIDATION: if an email address is provided but is not valid, reject, but allow an empty email address.
+    if($email !== '' && !ValidatorSanitizer::isValid_email_address($email)){
+        http_response_code(400);   //Bad request
+        exit('Invalid email address.');
     }
 
     //SETUP: headers
